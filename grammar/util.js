@@ -16,7 +16,7 @@ export const quote = '\''
 
 export const qualified = ($, id) => seq($._qualifying_module, id)
 
-export const sep = (sep, rule) => optional(seq(rule, repeat(seq(sep, rule))))
+export const sep = (sep, rule) => optional(sep1(sep, rule))
 
 export const sep1 = (sep, rule) => seq(rule, repeat(seq(sep, rule)))
 

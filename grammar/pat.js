@@ -1,4 +1,6 @@
-import { parens, braces, sep, brackets, snoc_brackets } from './util.js';
+import { parens, braces, sep, sep1, brackets, snoc_brackets } from './util.js';
+
+const sepFirstXOtherYs = (sep, firstRule, otherRule) => optional(seq(firstRule, repeat(seq(sep, otherRule))))
 
 export default {
 
@@ -7,7 +9,7 @@ export default {
     $.ticked_operator,
   ),
 
-  pat_at: $ => '@',
+  pat_at: _ => '@',
 
   pat_field: $ =>
     seq(
@@ -15,7 +17,12 @@ export default {
       optional(seq(':', $._pat))
     ),
 
-  pat_fields: $ => braces(sep($.comma, $.pat_field)),
+  // {foo} - ok
+  // {foo,_} - ok
+  // {foo,bar,_} - ok
+  // {_} - error
+  pat_fields: $ => braces(sepFirstXOtherYs($.comma, $.pat_field, choice($.wildcard, $.pat_field))),
+  // pat_fields: $ => braces(sep1($.comma, $.pat_field)),
 
   pat_record: $ => field('fields', $.pat_fields),
 

@@ -3914,8 +3914,17 @@
                         "name": "comma"
                       },
                       {
-                        "type": "SYMBOL",
-                        "name": "pat_field"
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "wildcard"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "pat_field"
+                          }
+                        ]
                       }
                     ]
                   }

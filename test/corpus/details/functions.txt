@@ -379,6 +379,50 @@ f (X {a = Just a, b = Nothing} x) = _
       (wildcard))))
 
 ================================================================================
+Explicit args in declaration, destruction with a wildcard -> should fail
+================================================================================
+
+f (X {_}) = _
+
+--------------------------------------------------------------------------------
+
+(ERROR
+  (exp_name
+    (loname))
+  (exp_parens
+    (exp_name
+      (caname))
+    (type_braces
+      (wildcard)))
+  (wildcard))
+
+================================================================================
+Explicit args in declaration, destruction with a args and wildcard
+================================================================================
+
+f (X {foo,_}) = _
+
+--------------------------------------------------------------------------------
+
+(idris
+  (function
+    (lhs
+      (funvar
+        (loname)
+        (patterns
+          (pat_parens
+            (pat_name
+              (caname))
+            (pat_record
+              (pat_fields
+                (pat_field
+                  (field_name))
+                (comma)
+                (wildcard)))))))
+    (rhs
+      (wildcard))))
+
+================================================================================
 Multiple declaration
 ================================================================================
 
